@@ -1,3 +1,0 @@
-USERNAME: "my_favorte_username"
-PASSWORD: "aijewga@#!%^ahgfdndbks211"
-
