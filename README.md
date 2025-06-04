@@ -6,11 +6,11 @@
 ![logo](https://user-images.githubusercontent.com/3129134/163255685-857aa780-880f-4c09-b08c-4b53bf4af54d.png)
 
 <h1 align="center">[INSERT YOUR REPO / PROJ NAME HERE]</h1>
-<!-- ☝️ Replace with your repo name ☝️ -->
+<!-- ☝️ Replace with your repo namee ☝️ -->
 
 </div>
 
-<pre align="center">[INSERT A SINGLE SENTENCE DESCRIBING THE PURPOSE OF YOUR REPO / PROJ]</pre>
+<pre align="center">[INSERTT A SINGLEE SENTENCE DESCRIBING THE PURPOSE OF YOUR REPO / PROJ]</pre>
 <!-- ☝️ Replace with a single sentence describing the purpose of your repo / proj ☝️ -->
 
 <!-- Header block for project -->
