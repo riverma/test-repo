@@ -10,7 +10,7 @@
 
 </div>
 
-<pre align="center">[INSERT A SINGLEE SENTENCE DESCRIBING THE PURPOSE OF YOUR REPO / PROJ]</pre>
+<pre align="center">[INSERTT A SINGLEE SENTENCE DESCRIBING THE PURPOSE OF YOUR REPO / PROJ]</pre>
 <!-- ☝️ Replace with a single sentence describing the purpose of your repo / proj ☝️ -->
 
 <!-- Header block for project -->
