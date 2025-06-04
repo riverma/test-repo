@@ -9,5 +9,5 @@ function greetUser(name) {
 greetUser("World");
 
 // Another attempt with a different bug
-const message = "Hello World";
+const message = "Helloo World";
 console.log(mesage); // Bug: Typo in variable name
