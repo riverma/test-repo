@@ -8,6 +8,11 @@
 # 2. The workflow will automatically run on push, pull requests, and on a schedule
 # 3. Review and address any security alerts in the Security tab of your repository
 #
+# Note: CodeQL only analyzes these languages:
+# C/C++, C#, Go, Java/Kotlin, JavaScript/TypeScript, Python, Ruby, Swift
+# If your repository contains only configuration files (YAML, JSON, XML) or 
+# documentation, this workflow will exit gracefully without errors.
+#
 # For more information about CodeQL, see:
 # https://codeql.github.com/docs/codeql-overview/about-codeql/
 
@@ -54,22 +59,36 @@ jobs:
 
     # Initializes the CodeQL tools for scanning
     - name: Initialize CodeQL
+      id: init-codeql
       uses: github/codeql-action/init@v3
+      continue-on-error: true
       # Automatically detects languages in the repository
       # Override the language detection by uncommenting the line below
       # with:
       #   languages: go, javascript, python
 
+    # Check if any languages were detected
+    - name: Check language detection
+      if: steps.init-codeql.outcome == 'failure'
+      run: |
+        echo "No supported languages detected for CodeQL analysis."
+        echo "CodeQL supports: C/C++, C#, Go, Java/Kotlin, JavaScript/TypeScript, Python, Ruby, Swift"
+        echo "This workflow will now exit gracefully."
+        exit 0
+
     # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift)
     - name: Autobuild
+      if: steps.init-codeql.outcome == 'success'
       uses: github/codeql-action/autobuild@v3
 
     # ℹ️ If the Autobuild fails, remove it and uncomment the following lines
     # - name: Manual Build
+    #   if: steps.init-codeql.outcome == 'success'
     #   run: |
     #     echo 'Replace with your build commands'
     #     make bootstrap
     #     make release
 
     - name: Perform CodeQL Analysis
+      if: steps.init-codeql.outcome == 'success'
       uses: github/codeql-action/analyze@v3
