@@ -35,18 +35,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-        # Automatically detects languages in the repository
-        # CodeQL supports the following languages:
-        # 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby', 'typescript', 'kotlin', 'rust', 'swift'
+        language: [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby', 'swift' ]
+        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby', 'swift' ]
         # Use 'javascript' to analyze TypeScript code
-        # To manually specify languages, uncomment and modify the lines below:
-        # - language: cpp
-        #   build-mode: autobuild
-        # - language: java
-        #   build-mode: autobuild
-        # - language: python
-        #   build-mode: none
+        # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
 
     steps:
     - name: Checkout repository
@@ -57,7 +49,6 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
-        build-mode: ${{ matrix.build-mode }}
         # If you wish to specify custom queries, you can do so here or in a config file.
         # By default, queries listed here will override any specified in a config file.
         # Prefix the list here with "+" to use these queries and those in the config file.
@@ -68,7 +59,7 @@ jobs:
 
     # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift)
     # If this step fails, then you should remove it and run the build manually
-    - if: matrix.build-mode == 'autobuild'
+    - if: matrix.language == 'cpp' || matrix.language == 'csharp' || matrix.language == 'go' || matrix.language == 'java' || matrix.language == 'swift'
       name: Autobuild
       uses: github/codeql-action/autobuild@v3
 
@@ -77,7 +68,7 @@ jobs:
 
     # If the Autobuild fails above, remove it and uncomment the following lines
     # to manually build your code. Modify these commands based on your build process.
-    # - if: matrix.build-mode == 'manual'
+    # - if: matrix.language == 'cpp' || matrix.language == 'csharp' || matrix.language == 'go' || matrix.language == 'java' || matrix.language == 'swift'
     #   name: Manual Build
     #   shell: bash
     #   run: |
