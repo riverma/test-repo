@@ -1,0 +1,101 @@
+# CodeQL Code Scanning GitHub Action
+# 
+# This workflow enables CodeQL code scanning for your repository to identify
+# security vulnerabilities and coding errors in your codebase.
+#
+# To use this workflow:
+# 1. Copy this file to your repository's .github/workflows/ directory
+# 2. The workflow will automatically run on push, pull requests, and on a schedule
+# 3. Review and address any security alerts in the Security tab of your repository
+#
+# For more information about CodeQL, see:
+# https://codeql.github.com/docs/codeql-overview/about-codeql/
+
+name: "CodeQL Advanced"
+
+on:
+  push:
+    branches: [ "main", "master", "develop" ]
+  pull_request:
+    branches: [ "main", "master", "develop" ]
+  schedule:
+    # Runs at 5 AM UTC every Monday
+    - cron: '0 5 * * 1'
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        # Automatically detects languages in the repository
+        # CodeQL supports the following languages:
+        # 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby', 'typescript', 'kotlin', 'rust', 'swift'
+        # Use 'javascript' to analyze TypeScript code
+        # To manually specify languages, uncomment and modify the lines below:
+        # - language: cpp
+        #   build-mode: autobuild
+        # - language: java
+        #   build-mode: autobuild
+        # - language: python
+        #   build-mode: none
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # Initializes the CodeQL tools for scanning
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
+        build-mode: ${{ matrix.build-mode }}
+        # If you wish to specify custom queries, you can do so here or in a config file.
+        # By default, queries listed here will override any specified in a config file.
+        # Prefix the list here with "+" to use these queries and those in the config file.
+        
+        # For more details on CodeQL's query packs, refer to:
+        # https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
+        # queries: security-extended,security-and-quality
+
+    # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift)
+    # If this step fails, then you should remove it and run the build manually
+    - if: matrix.build-mode == 'autobuild'
+      name: Autobuild
+      uses: github/codeql-action/autobuild@v3
+
+    # ℹ️ Command-line programs to run using the OS shell.
+    # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
+
+    # If the Autobuild fails above, remove it and uncomment the following lines
+    # to manually build your code. Modify these commands based on your build process.
+    # - if: matrix.build-mode == 'manual'
+    #   name: Manual Build
+    #   shell: bash
+    #   run: |
+    #     echo 'Replace with your build commands'
+    #     # Example for Maven project:
+    #     # mvn clean compile
+    #     # Example for Node.js:
+    #     # npm ci
+    #     # npm run build
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:${{matrix.language}}"
+
+    # Optional: Upload SARIF results to GitHub (already done by analyze action above)
+    # This step is included for reference if you need custom SARIF handling
+    # - name: Upload SARIF
+    #   uses: github/codeql-action/upload-sarif@v3
+    #   with:
+    #     sarif_file: results.sarif
