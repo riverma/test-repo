@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
   "label": "Deployment Frequency",
-  "message": "0 per month (Low)",
-  "color": "red"
+  "message": "1 per month (Medium)",
+  "color": "yellow"
 }
