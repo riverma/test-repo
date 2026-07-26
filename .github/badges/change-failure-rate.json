@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
   "label": "Change Failure Rate",
-  "message": "0% (Elite)",
-  "color": "brightgreen"
+  "message": "N/A (No deployments) (N/A)",
+  "color": "gray"
 }
